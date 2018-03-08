@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Processador de CEP</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <div class="input-group">
+            <input type="text" [(ngModel)]="fileName" class="form-control file" readonly>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary  btn-file" aria-label="Left Align" (click)="openFile()">
+                <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <input style="display: none" type="file" (change)="selectFile($event)" #inputfile>
+        </div>
+
+        <div class="col-md-12  center-block">
+          <button [disabled]="enviando" class="btn btn-primary center-block" (click)="uploadArquivo()">Enviar</button>
+        </div>
+
+        <div *ngIf="enviando" class="col-md-12 text-center loader">
+          <span>
+            <i class="fa fa-spinner fa-pulse fa-2x" aria-hidden="true"></i>
+            <label>Processando arquivo...</label>
+          </span>
+        </div>
+
+        <div *ngIf="!enviando" class="col-md-12 text-center loader">
+          <label>Aguardando arquivo para processamento...</label>
+        </div>
+
+        <div class="col-md-12" *ngIf="error">
+          <div class="alert alert-danger" role="alert">
+            <strong>Erro: </strong> {{error}}
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Arquivo</th>
+        <th>Data</th>
+        <th>Registros novos</th>
+        <th>Registros alterados</th>
+        <th>Registros com erros</th>
+        <th>Registros processados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let historico of historicos">
+        <td>
+          <td-historico-status [historico]="historico" (historicoChange)="onHistoricoChange($event)"></td-historico-status>
+        </td>
+        <td>{{historico.arquivo}}</td>
+        <td class="text-center">{{historico.data | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td class="text-right">{{historico.quantidadeResgitrosNovos}}</td>
+        <td class="text-right">{{historico.quantidadeRegistrosAlterados}}</td>
+        <td class="text-right">{{historico.quantidadeRegistrosComErros}}</td>
+        <td class="text-right">{{historico.quantidadeRegistrosProcessados}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
