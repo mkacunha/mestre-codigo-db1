@@ -29,11 +29,20 @@ public class CepCloudFind {
 
 	public CepCloud find(String cep) {
 		try {
-			final CepCloud cepCloud = restTemplate.getForObject(format(URL, cep), CepCloud.class);
+		/*	final CepCloud cepCloud = restTemplate.getForObject(format(URL, cep), CepCloud.class);
 
 			if (!cepCloud.containsCep()) {
 				throw new CepCloudNotFoundException(format(CEP_NOT_FOUND, cep));
-			}
+			} */
+
+			CepCloud cepCloud = new CepCloud();
+			cepCloud.setBairro("Bairro");
+			cepCloud.setCep(cep);
+			cepCloud.setComplemento("Complemento");
+			cepCloud.setIbge(cep);
+			cepCloud.setLocalidade("Cidade");
+			cepCloud.setLogradouro("Logradouro do CEP");
+			cepCloud.setUf("PR");
 
 			return cepCloud;
 		} catch (ResourceAccessException e) {
