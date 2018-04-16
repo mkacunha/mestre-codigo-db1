@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { LoginStorage } from '../../login/login.storage';
 
 @Injectable()
 export class RestService {
 
-  private readonly URL = "http://localhost:8080/api/";
+  private readonly URL = 'http://localhost:8080/api/';
   private headers;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private loginStorage: LoginStorage) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
+    this.headers.append('token', this.loginStorage.getToken);
   }
 
   get(resource: string): Observable<any> {
@@ -21,7 +23,7 @@ export class RestService {
   }
 
   upload(resource: String, file: File): Observable<any> {
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('file', file);
 
     return this.http

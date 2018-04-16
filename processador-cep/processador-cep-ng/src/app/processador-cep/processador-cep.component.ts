@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import "rxjs/add/operator/takeWhile";
+import 'rxjs/add/operator/takeWhile';
 
 
 import { ProcessadorCepService } from './processador-cep.service';
@@ -9,7 +9,7 @@ import { Historico } from './../model/historico/historico';
 import { HistoricoStatus } from './../model/historico/historico-status';
 
 @Component({
-  selector: 'processador-cep',
+  selector: 'app-processador-cep',
   templateUrl: './processador-cep.component.html',
   styleUrls: ['./processador-cep.component.css']
 })
@@ -22,7 +22,7 @@ export class ProcessadorCepComponent implements OnInit {
   private historicoProcessado: Historico = new Historico({});
   private historicos: Historico[] = [];
 
-  private enviando: boolean = false;
+  private enviando = false;
   private error: String = '';
 
   constructor(private service: ProcessadorCepService) { }
@@ -45,7 +45,7 @@ export class ProcessadorCepComponent implements OnInit {
 
   private uploadArquivo() {
     if (!this.file) {
-      this.error = "Informe um arquivo para executar o UPLOAD.";
+      this.error = 'Informe um arquivo para executar o UPLOAD.';
       return;
     }
 
@@ -65,11 +65,11 @@ export class ProcessadorCepComponent implements OnInit {
   }
 
   private initVariables() {
-    this.error = "";
+    this.error = '';
   }
 
   private onHistoricoChange(historico: Historico) {
-    let index = this.historicos.findIndex(his => his.token === historico.token);
+    const index = this.historicos.findIndex(his => his.token === historico.token);
     if (index >= 0) {
       this.historicos[index] = historico;
     }
