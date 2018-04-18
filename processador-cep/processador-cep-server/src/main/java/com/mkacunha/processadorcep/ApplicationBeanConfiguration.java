@@ -10,15 +10,17 @@ import java.util.concurrent.Executors;
 @Configuration
 public class ApplicationBeanConfiguration {
 
-	public static final int THREAD_POOL_SIZE = 20;
+    public static final int THREAD_POOL_SIZE = 20;
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
-	@Bean
-	public ExecutorService executorService() {
-		return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-	}
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+    }
+
+
 }

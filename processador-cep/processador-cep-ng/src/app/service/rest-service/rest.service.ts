@@ -7,12 +7,9 @@ import { LoginStorage } from '../../login/login.storage';
 export class RestService {
 
   private readonly URL = 'http://localhost:8080/api/';
-  private headers;
 
   constructor(private http: Http, private loginStorage: LoginStorage) {
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
-    this.headers.append('token', this.loginStorage.getToken);
+
   }
 
   get(resource: string): Observable<any> {
@@ -26,9 +23,24 @@ export class RestService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
+    const headers = new Headers();
+  //  headers.append('token', '1234567890');
+
     return this.http
-      .post(`${this.URL}${resource}`, formData)
+      .post(`${this.URL}${resource}`, formData, { headers: headers })
       .map(res => res.json())
       .catch(error => Observable.throw(error));
+  }
+
+  get headers() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    if (this.loginStorage.isContainsToken) {
+      const token = this.loginStorage.getToken;
+      headers.append('token', token.toString());
+    }
+
+    return headers;
   }
 }
