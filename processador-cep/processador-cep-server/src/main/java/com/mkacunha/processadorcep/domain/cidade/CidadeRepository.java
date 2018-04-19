@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import static com.mkacunha.processadorcep.infrastructure.jdbc.sql.Command.init;
-import static com.mkacunha.processadorcep.infrastructure.uitils.Optionals.newOptionalOrEmptyIfNull;
 
 @Repository
 public class CidadeRepository {
@@ -48,6 +47,6 @@ public class CidadeRepository {
 	}
 
 	private Optional<Cidade> executeCommandFindOne(Command command) throws TransactionException {
-		return newOptionalOrEmptyIfNull(executor.execute(command, CidadeSelectOneConsumer.of()));
+		return Optional.ofNullable(executor.execute(command, CidadeSelectOneConsumer.of()));
 	}
 }

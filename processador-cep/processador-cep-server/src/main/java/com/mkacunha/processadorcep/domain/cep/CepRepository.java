@@ -1,6 +1,5 @@
 package com.mkacunha.processadorcep.domain.cep;
 
-import com.google.common.base.MoreObjects;
 import com.mkacunha.processadorcep.infrastructure.entidade.EntidadeInsertConsumer;
 import com.mkacunha.processadorcep.infrastructure.exception.TransactionException;
 import com.mkacunha.processadorcep.infrastructure.jdbc.sql.Command;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 import static com.mkacunha.processadorcep.infrastructure.jdbc.sql.Command.init;
-import static com.mkacunha.processadorcep.infrastructure.uitils.Optionals.newOptionalOrEmptyIfNull;
 
 @Repository
 public class CepRepository {
@@ -57,7 +55,7 @@ public class CepRepository {
 
 	public Optional<Cep> findByCep(String cep) throws TransactionException {
 		final Cep cepFind = executor.execute(init(SQL_FIND_ONE).parameter(cep).command(), CepSelectOneConsumer.of());
-		return newOptionalOrEmptyIfNull(cepFind);
+		return Optional.ofNullable(cepFind);
 
 	}
 }
