@@ -1,0 +1,38 @@
+{
+  "initialDate" : "01/01/2017 08:00",
+  "durantion" : 3,
+  "host": {
+    "name": "Eu",
+    "zone": "America/Sao_Paulo"
+  },
+  "participants": [
+    {
+      "name":"Marciano",
+      "zone":"America/Sao_Paulo"
+    },
+    {
+      "name":"Maria",
+      "zone":"US/Michigan"
+    },
+    {
+      "name":"João",
+      "zone":"Asia/Dili"
+    },
+    {
+      "name":"Carlos",
+      "zone":"Mexico/BajaSur"
+    },
+    {
+      "name":"Joaquim",
+      "zone":"America/Sao_Paulo"
+    },
+    {
+      "name":"Madalena",
+      "zone":"Africa/Malabo"
+    },
+    {
+      "name":"Fabiana",
+      "zone":"Asia/Dili"
+    }
+  ]
+}
