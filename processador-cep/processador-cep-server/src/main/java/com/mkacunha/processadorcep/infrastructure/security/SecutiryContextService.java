@@ -7,6 +7,8 @@ import java.util.Map;
 @Service
 public class SecutiryContextService {
 
+    public static final String USER_NOT_FOUND = "Usuário não encontrado";
+
     private final Map<String, User> loggedUsers;
 
     public SecutiryContextService(Map<String, User> loggedUsers) {
@@ -19,5 +21,12 @@ public class SecutiryContextService {
 
     public boolean hasToken(String token) {
         return loggedUsers.containsKey(token);
+    }
+
+    public User getUser(String token) {
+        if (this.hasToken(token)) {
+            return this.loggedUsers.get(token);
+        }
+        throw new RuntimeException(USER_NOT_FOUND);
     }
 }

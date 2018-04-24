@@ -21,7 +21,7 @@ public class SecurityContextConfiguration {
     public FilterRegistrationBean securityContextFilter() {
         final FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
         filterRegBean.setFilter(new SecurityContextFilter());
-        filterRegBean.addUrlPatterns("/api/*");
+        filterRegBean.addUrlPatterns("/api/no-verify*");
         filterRegBean.setEnabled(Boolean.TRUE);
         filterRegBean.setName("Meu Filter");
         filterRegBean.setAsyncSupported(Boolean.TRUE);

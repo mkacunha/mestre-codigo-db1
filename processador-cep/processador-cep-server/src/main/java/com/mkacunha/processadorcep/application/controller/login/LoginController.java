@@ -24,5 +24,15 @@ public class LoginController {
         }
     }
 
+    @GetMapping(value = "/me")
+    public ResponseEntity me(@RequestParam("token") String token){
+        try {
+            return ResponseEntity.ok(loginService.me(token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e);
+        }
+    }
+
+
 
 }

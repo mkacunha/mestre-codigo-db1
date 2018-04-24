@@ -70,4 +70,7 @@ public class LoginService {
         return response.getBody();
     }
 
+    public User me(String token) {
+        return secutiryContextService.getUser(token);
+    }
 }
