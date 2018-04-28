@@ -1,5 +1,6 @@
 package com.mkacunha.processadorcep.domain.cep.cepfile.processor;
 
+import com.google.common.util.concurrent.Futures;
 import com.mkacunha.processadorcep.domain.cep.cepfile.CepFile;
 import com.mkacunha.processadorcep.domain.historico.HistoricoService;
 import com.mkacunha.processadorcep.domain.historico.log.HistoricoLog;

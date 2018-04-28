@@ -15,12 +15,12 @@ export class LoginStorage {
     sessionStorage.removeItem(this.ACCESS_TOKEN);
   }
 
-  public isContainsToken(): boolean {
-    let token: string = sessionStorage.getItem(this.ACCESS_TOKEN);
-    return token && token != 'undefined' && token.trim().length > 0;
+  get isContainsToken(): boolean {
+    const token: string = sessionStorage.getItem(this.ACCESS_TOKEN);
+    return token && token !== 'undefined' && token.trim().length > 0;
   }
 
-  public getToken(): string {
+  get getToken(): string {
     return sessionStorage.getItem(this.ACCESS_TOKEN);
   }
 

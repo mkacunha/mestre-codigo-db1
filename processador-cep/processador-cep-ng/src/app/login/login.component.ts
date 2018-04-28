@@ -1,10 +1,9 @@
+import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { LoginStorage } from './login.storage';
-
-declare const FB: any;
 
 @Component({
   selector: 'app-login',
@@ -13,19 +12,32 @@ declare const FB: any;
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private storage: LoginStorage, private router: Router, private http: Http) { }
+  constructor(private storage: LoginStorage,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private http: Http) { }
 
   ngOnInit() {
     this.storage.clear();
   }
 
-
-  private login(): void {
-    console.log('https://www.facebook.com/v2.12/dialog/oauth?client_id=791476447724146&redirect_uri=http://localhost:8080/login');
-    console.log(FB);
-    this.http
-      .get('https://www.facebook.com/v2.12/dialog/oauth?client_id=791476447724146&redirect_uri=http://localhost:8080/login')
-      .subscribe(res => console.log(res));
+  teste() {
+    console.log('okkkkkkkkkkk');
   }
 
+
+  private login(): void {
+    const wLogin = window
+      .open('https://www.facebook.com/v2.12/dialog/oauth?client_id=791476447724146&redirect_uri=http://localhost:8080/login', '_blank');
+    Observable.timer(5000).take(1).subscribe(() => {
+      /*console.log(wLogin);
+      console.log(wLogin.document);
+      const pre = wLogin.document.getElementsByTagName('pre');
+      if (pre) {
+        console.log(JSON.parse(pre[0].innerText));
+        wLogin.close();
+      }*/
+      wLogin.close();
+    });
+  }
 }
