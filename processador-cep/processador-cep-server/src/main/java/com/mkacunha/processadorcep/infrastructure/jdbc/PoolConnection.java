@@ -4,6 +4,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mkacunha.processadorcep.infrastructure.exception.ConnectionException;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;

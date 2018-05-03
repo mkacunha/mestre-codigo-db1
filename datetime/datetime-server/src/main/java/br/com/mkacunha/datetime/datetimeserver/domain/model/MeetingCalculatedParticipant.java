@@ -8,11 +8,13 @@ public class MeetingCalculatedParticipant {
 
     private String finalDate;
 
+    private String period;
 
-    public MeetingCalculatedParticipant(String name, String initialDate, String finalDate) {
+    public MeetingCalculatedParticipant(String name, String initialDate, String finalDate, String period) {
         this.name = name;
         this.initialDate = initialDate;
         this.finalDate = finalDate;
+        this.period = period;
     }
 
     public String getName() {
@@ -25,5 +27,9 @@ public class MeetingCalculatedParticipant {
 
     public String getFinalDate() {
         return finalDate;
+    }
+
+    public String getPeriod() {
+        return period;
     }
 }
