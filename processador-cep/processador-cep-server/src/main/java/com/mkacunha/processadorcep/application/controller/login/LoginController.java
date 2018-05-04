@@ -20,7 +20,7 @@ public class LoginController {
         try {
             return ResponseEntity.ok(loginService.login(code));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
