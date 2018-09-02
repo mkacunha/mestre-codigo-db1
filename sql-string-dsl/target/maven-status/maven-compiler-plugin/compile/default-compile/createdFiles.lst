@@ -1,0 +1,8 @@
+br/com/mkacunha/core/Select.class
+br/com/mkacunha/core/App.class
+br/com/mkacunha/core/FieldName.class
+br/com/mkacunha/core/Operator.class
+br/com/mkacunha/core/From.class
+br/com/mkacunha/core/SqlVisitor.class
+br/com/mkacunha/core/Field.class
+br/com/mkacunha/core/Element.class
