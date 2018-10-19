@@ -1,7 +1,7 @@
 package br.com.mkacunha.aspectjdemo.domain.pessoa;
 
-import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.SqlExecutor;
-import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.Transactional;
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.sql.SqlExecutor;
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.transaction.Transactional;
 import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.exceptions.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

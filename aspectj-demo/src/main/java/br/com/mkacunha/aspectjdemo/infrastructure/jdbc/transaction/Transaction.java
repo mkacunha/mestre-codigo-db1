@@ -1,5 +1,6 @@
-package br.com.mkacunha.aspectjdemo.infrastructure.jdbc;
+package br.com.mkacunha.aspectjdemo.infrastructure.jdbc.transaction;
 
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.PoolConnection;
 import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.exceptions.TransactionException;
 import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.exceptions.TransactionRollbackException;
 import org.slf4j.Logger;

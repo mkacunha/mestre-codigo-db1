@@ -1,7 +1,7 @@
 package br.com.mkacunha.aspectjdemo;
 
-import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.SqlExecutor;
-import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.Transaction;
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.sql.SqlExecutor;
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

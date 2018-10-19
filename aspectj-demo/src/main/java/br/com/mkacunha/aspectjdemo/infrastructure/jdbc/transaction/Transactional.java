@@ -1,4 +1,4 @@
-package br.com.mkacunha.aspectjdemo.infrastructure.jdbc;
+package br.com.mkacunha.aspectjdemo.infrastructure.jdbc.transaction;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
