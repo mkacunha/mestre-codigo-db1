@@ -17,13 +17,13 @@ public class PoolConnection {
 
 	public static final String MSG_NAO_FOI_POSSIVEL_CONECTAR = "Não foi possível connectar ao banco de dados. Entre em contato com o administrador.";
 
-	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
+	public static final String DRIVER_CLASS = "org.h2.Driver";
 
-	public static final String JDBC_URL = "jdbc:mysql://localhost:3306/processadorcep";
+	public static final String JDBC_URL = "jdbc:h2:file:~/test";
 
-	public static final String USER = "root";
+	public static final String USER = "sa";
 
-	public static final String PASSWORD = "root";
+	public static final String PASSWORD = "";
 
 	public static final int MIN_POOL_SIZE = 1;
 
