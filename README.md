@@ -12,7 +12,7 @@
 
 ~5) Realizar chamadas em um servidor HTTP com autenticação, tratamento de erros, e exibindo para o usuário as informações obtidas;~
 
-6) Criar uma aplicação que utilize JMX em um servidor remoto, realizando leituras e gravações afim de utilizá-lo como mecanismo de gerenciamento e monitoramento;
+~6) Criar uma aplicação que utilize JMX em um servidor remoto, realizando leituras e gravações afim de utilizá-lo como mecanismo de gerenciamento e monitoramento;~
 
 7) Criar um mecanismo que configure o sistema durante a inicialização através de informações presentes em annotations de classes, métodos e package-info;
 
