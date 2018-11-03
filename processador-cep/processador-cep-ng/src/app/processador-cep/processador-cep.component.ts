@@ -49,6 +49,7 @@ export class ProcessadorCepComponent implements OnInit {
       return;
     }
 
+    this.error = '';
     this.enviando = true;
     this.service.upload(this.file)
       .map(result => new Historico(result))

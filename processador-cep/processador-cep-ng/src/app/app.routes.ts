@@ -7,7 +7,7 @@ import { ProcessadorCepComponent } from './processador-cep/processador-cep.compo
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent,  },
     { path: 'processador', component: ProcessadorCepComponent, canActivate: [LoginGuard] },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'processador' }
   ];
 
 export const routing = RouterModule.forRoot(appRoutes);
