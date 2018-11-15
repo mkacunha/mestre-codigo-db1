@@ -1,12 +1,11 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/takeWhile';
-
-
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { Historico } from './../model/historico/historico';
 import { ProcessadorCepService } from './processador-cep.service';
 
-import { Historico } from './../model/historico/historico';
-import { HistoricoStatus } from './../model/historico/historico-status';
+
 
 @Component({
   selector: 'app-processador-cep',
@@ -18,24 +17,69 @@ export class ProcessadorCepComponent implements OnInit {
   @ViewChild('inputfile') inputFile: ElementRef;
 
   private file: File;
-  private fileName: string;
-  private historicoProcessado: Historico = new Historico({});
-  private historicos: Historico[] = [];
+  fileName: string;
+  historicoProcessado: Historico = new Historico({});
+  historicos: Historico[] = [];
 
-  private enviando = false;
-  private error: String = '';
+  enviando = false;
+  error: String = '';
+
+  name: string;
+  message: string;
+
+  stompClient: any;
 
   constructor(private service: ProcessadorCepService) { }
 
   ngOnInit() {
-
   }
 
-  private openFile() {
+  connectSocket() {
+    const socket = new SockJS('/ws');
+    this.stompClient = Stomp.over(socket);
+    console.log(this.name);
+    this.stompClient.connect({}, () => this.onConnected(), error => this.onError(error));
+  }
+
+  private onConnected() {
+    // Subscribe to the Public Topic
+    this.stompClient.subscribe('/topic/public', message => this.receiveMessage(message));
+    this.stompClient.subscribe('/topic/joao', message => this.receivePrivateMessage(message));
+
+    // Tell your username to the server
+    this.stompClient.send("/app/chat.addUser",
+      {},
+      JSON.stringify({ sender: this.name, type: 'JOIN' })
+    )
+  }
+
+  enviar() {
+    this.stompClient.send("/app/chat.sendMessage",
+      {},
+      JSON.stringify({ sender: this.name, type: 'CHAT', content: this.message })
+    )
+  }
+
+  private onError(error) {
+    console.log(error);
+  }
+
+
+  private receivePrivateMessage(message) {
+    console.log('Mensagem privada')
+    console.log(message);
+  }
+
+  private receiveMessage(message) {
+    console.log('Mensagem public');
+    console.log(message);
+  }
+
+  openFile() {
     this.inputFile.nativeElement.click();
   }
 
-  private selectFile(event) {
+  selectFile(event) {
     this.initVariables();
     if (event.target.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
@@ -43,7 +87,7 @@ export class ProcessadorCepComponent implements OnInit {
     }
   }
 
-  private uploadArquivo() {
+  uploadArquivo() {
     if (!this.file) {
       this.error = 'Informe um arquivo para executar o UPLOAD.';
       return;
@@ -69,7 +113,7 @@ export class ProcessadorCepComponent implements OnInit {
     this.error = '';
   }
 
-  private onHistoricoChange(historico: Historico) {
+  onHistoricoChange(historico: Historico) {
     const index = this.historicos.findIndex(his => his.token === historico.token);
     if (index >= 0) {
       this.historicos[index] = historico;
