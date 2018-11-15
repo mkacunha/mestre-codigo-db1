@@ -12,45 +12,47 @@ import static java.lang.String.format;
 @Component
 public class CepCloudFind {
 
-	public static final String CEP_NOT_FOUND = "CEP %s não encontrado";
+    public static final String CEP_NOT_FOUND = "CEP %s não encontrado";
 
-	public static final String SERVIDOR_INDISPONIVEL = "Não foi possivel conectar ao servidor, indisponível";
+    public static final String SERVIDOR_INDISPONIVEL = "Não foi possivel conectar ao servidor, indisponível";
 
-	private static final Logger LOGGER = Logger.getLogger(CepCloudFind.class);
+    private static final Logger LOGGER = Logger.getLogger(CepCloudFind.class);
 
-	private final static String URL = "https://viacep.com.br/ws/%s/json/";
+    private final static String URL = "https://viacep.com.br/ws/%s/json/";
 
-	private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-	@Autowired
-	public CepCloudFind(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
+    @Autowired
+    public CepCloudFind(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
-	public CepCloud find(String cep) {
-		try {
+    public CepCloud find(String cep) {
+        try {
 		/*	final CepCloud cepCloud = restTemplate.getForObject(format(URL, cep), CepCloud.class);
 
 			if (!cepCloud.containsCep()) {
 				throw new CepCloudNotFoundException(format(CEP_NOT_FOUND, cep));
 			} */
 
-			CepCloud cepCloud = new CepCloud();
-			cepCloud.setBairro("Bairro");
-			cepCloud.setCep(cep);
-			cepCloud.setComplemento("Complemento");
-			cepCloud.setIbge(cep);
-			cepCloud.setLocalidade("Cidade");
-			cepCloud.setLogradouro("Logradouro do CEP");
-			cepCloud.setUf("PR");
+            Thread.sleep(3000);
 
-			return cepCloud;
-		} catch (ResourceAccessException e) {
-			LOGGER.error(e);
-			throw new CepCloudNotFoundException(SERVIDOR_INDISPONIVEL);
-		} catch (Exception e) {
-			LOGGER.error(e);
-			throw new CepCloudNotFoundException(format(CEP_NOT_FOUND, cep), e);
-		}
-	}
+            CepCloud cepCloud = new CepCloud();
+            cepCloud.setBairro("Bairro");
+            cepCloud.setCep(cep);
+            cepCloud.setComplemento("Complemento");
+            cepCloud.setIbge(cep);
+            cepCloud.setLocalidade("Cidade");
+            cepCloud.setLogradouro("Logradouro do CEP");
+            cepCloud.setUf("PR");
+
+            return cepCloud;
+        } catch (ResourceAccessException e) {
+            LOGGER.error(e);
+            throw new CepCloudNotFoundException(SERVIDOR_INDISPONIVEL);
+        } catch (Exception e) {
+            LOGGER.error(e);
+            throw new CepCloudNotFoundException(format(CEP_NOT_FOUND, cep), e);
+        }
+    }
 }

@@ -59,6 +59,10 @@
 			<artifactId>guava</artifactId>
 			<version>23.2-jre</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
