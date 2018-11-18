@@ -1,6 +1,7 @@
 package br.com.mkacunha.aspectjdemo.domain.pessoa;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,15 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PessoaServiceTestIT {
+public class PessoaServiceTest {
 
     @Autowired
     private PessoaService pessoaService;
+
+    @Before
+    public void setUp() throws Exception {
+        pessoaService.deleteAll();
+    }
 
     @After
     public void tearDown() throws Exception {

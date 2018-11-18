@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SqlExecutorTestIT {
+public class SqlExecutorTest {
 
     @Autowired
     private SqlExecutor executor;
@@ -21,19 +21,9 @@ public class SqlExecutorTestIT {
 
     @Test
     public void deve_executar_comando_sql() throws TransactionException {
-
-        String sql = "CREATE TABLE   PESSOA " +
-                "(id INTEGER NOT NULL auto_increment, " +
-                " nome VARCHAR(255), " +
-                " data_nascimento DATE, " +
-                " idade INTEGER, " +
-                " PRIMARY KEY ( id ))";
-
         transaction.begin();
-        executor.execute(sql);
-        executor.execute("insert into PESSOA(nome, data_nascimento, idade) values('JOÃO DA SILVA', '1990-02-01', 28);");
+        executor.execute("insert into PESSOA(id, nome, data_nascimento, idade) values(1, 'JOÃO DA SILVA', '1990-02-01', 28);");
         transaction.commit();
-
     }
 
 
