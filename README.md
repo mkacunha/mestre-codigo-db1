@@ -28,6 +28,6 @@
 
 13) Criar uma aplicação composta com interface com o usuário Desktop usando JavaFX, realizando leitura de de uma imagem selecionada pelo usuário, manipulando-a e gravando o resultado em um destino também selecionado pelo usuário;
 
-14) Criar uma aplicação em tempo real, com interação multi-usuário que consuma e disponibilize informações através de socket com tratamento de erros;
+~14) Criar uma aplicação em tempo real, com interação multi-usuário que consuma e disponibilize informações através de socket com tratamento de erros;~
 
 15) Criar uma aplicação com no minimo 80% de cobertura de teste unitário, demonstrando o uso de stubs e mocks;
