@@ -11,34 +11,34 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class TdHistoricoStatusComponent implements OnInit {
 
   @Input() historico: Historico;
-  @Output() historicoChange: EventEmitter<Historico> = new EventEmitter<Historico>();
+  //@Output() historicoChange: EventEmitter<Historico> = new EventEmitter<Historico>();
 
   constructor(private service: ProcessadorCepService) { }
 
   ngOnInit() {
-    this.initConsultaHistorico();
+   // this.initConsultaHistorico();
   }
 
-  private initConsultaHistorico() {
-    if (this.historico.token && this.historico.isProcessando()) {
-      let isConsultarHistorico: boolean = true;
-      let timerConsultaHistorico = Observable.timer(100, 5000);
-      timerConsultaHistorico
-        .takeWhile(() => isConsultarHistorico)
-        .subscribe(() => {
-          console.log('consultando')
-          this.service.findHistoricoByToken(this.historico.token)
-            .takeWhile(() => isConsultarHistorico)
-            .map(result => new Historico(result))
-            .subscribe(historicoResult => {
-              if (!historicoResult.isProcessando()) {
-                this.historico = historicoResult;
-                this.historicoChange.emit(historicoResult);
-                isConsultarHistorico = false;
-              }
-            });
-        });
-    }
-  }
+  // private initConsultaHistorico() {
+  //   if (this.historico.token && this.historico.isProcessando()) {
+  //     let isConsultarHistorico: boolean = true;
+  //     let timerConsultaHistorico = Observable.timer(100, 5000);
+  //     timerConsultaHistorico
+  //       .takeWhile(() => isConsultarHistorico)
+  //       .subscribe(() => {
+  //         console.log('consultando')
+  //         this.service.findHistoricoByToken(this.historico.token)
+  //           .takeWhile(() => isConsultarHistorico)
+  //           .map(result => new Historico(result))
+  //           .subscribe(historicoResult => {
+  //             if (!historicoResult.isProcessando()) {
+  //               this.historico = historicoResult;
+  //               this.historicoChange.emit(historicoResult);
+  //               isConsultarHistorico = false;
+  //             }
+  //           });
+  //       });
+  //   }
+  // }
 
 }

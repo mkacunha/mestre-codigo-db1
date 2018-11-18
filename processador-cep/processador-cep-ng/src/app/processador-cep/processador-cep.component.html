@@ -56,11 +56,11 @@
     <tbody>
       <tr *ngFor="let historico of historicos">
         <td>
-          <td-historico-status [historico]="historico" (historicoChange)="onHistoricoChange($event)"></td-historico-status>
+          <td-historico-status [historico]="historico"></td-historico-status>
         </td>
         <td>{{historico.arquivo}}</td>
         <td class="text-center">{{historico.data | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-        <td class="text-right">{{historico.quantidadeResgitrosNovos}}</td>
+        <td class="text-right">{{historico.quantidadeRegistrosNovos}}</td>
         <td class="text-right">{{historico.quantidadeRegistrosAlterados}}</td>
         <td class="text-right">{{historico.quantidadeRegistrosComErros}}</td>
         <td class="text-right">{{historico.quantidadeRegistrosProcessados}}</td>
@@ -68,10 +68,3 @@
     </tbody>
   </table>
 </div>
-
-
-<input type="text" [(ngModel)]="name">
-<button (click)="connectSocket()">Connectar</button>
-<br>
-<input type="text" [(ngModel)]="message">
-<button (click)="enviar()">Enviar</button>

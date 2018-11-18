@@ -5,7 +5,7 @@ export class Historico {
     private _arquivo: String;
     private _status: HistoricoStatus;
     private _data: Date;
-    private _quantidadeResgitrosNovos: Number;
+    private _quantidadeRegistrosNovos: Number;
     private _quantidadeRegistrosAlterados: Number;
     private _quantidadeRegistrosComErros: Number;
     private _quantidadeRegistrosProcessados: Number;
@@ -15,7 +15,7 @@ export class Historico {
         this._arquivo = obj.arquivo;
         this._status = HistoricoStatus[obj.status as string];
         this._data = obj.data;
-        this._quantidadeResgitrosNovos = obj.quantidadeResgitrosNovos;
+        this._quantidadeRegistrosNovos = obj.quantidadeRegistrosNovos;
         this._quantidadeRegistrosAlterados = obj.quantidadeRegistrosAlterados;
         this._quantidadeRegistrosComErros = obj.quantidadeRegistrosComErros;
         this._quantidadeRegistrosProcessados = obj.quantidadeRegistrosProcessados;
@@ -60,12 +60,12 @@ export class Historico {
         return this._data;
     }
 
-    set quantidadeResgitrosNovos(quantidadeResgitrosNovos: Number) {
-        this._quantidadeResgitrosNovos = quantidadeResgitrosNovos;
+    set quantidadeRegistrosNovos(quantidadeRegistrosNovos: Number) {
+        this._quantidadeRegistrosNovos = quantidadeRegistrosNovos;
     }
 
-    get quantidadeResgitrosNovos(): Number {
-        return this._quantidadeResgitrosNovos;
+    get quantidadeRegistrosNovos(): Number {
+        return this._quantidadeRegistrosNovos;
     }
 
     set quantidadeRegistrosAlterados(quantidadeRegistrosAlterados: Number) {

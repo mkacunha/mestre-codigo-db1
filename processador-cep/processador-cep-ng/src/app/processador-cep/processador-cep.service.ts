@@ -8,13 +8,11 @@ export class ProcessadorCepService {
 
   constructor(private restService: RestService) { }
 
-  upload(file: File) {
-    return this.restService.upload('cepfiles/upload', file);
+  upload(session: string, file: File) {
+    return this.restService.upload('cepfiles/upload', session, file);
   }
 
   findHistoricoByToken(token: String) {
     return this.restService.get(`historicos/token/${token}`);
   }
-
-
 }

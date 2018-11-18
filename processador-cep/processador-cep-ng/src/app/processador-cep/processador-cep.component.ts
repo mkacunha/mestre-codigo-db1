@@ -17,6 +17,8 @@ export class ProcessadorCepComponent implements OnInit {
   @ViewChild('inputfile') inputFile: ElementRef;
 
   private file: File;
+  private session: string;
+
   fileName: string;
   historicoProcessado: Historico = new Historico({});
   historicos: Historico[] = [];
@@ -27,52 +29,42 @@ export class ProcessadorCepComponent implements OnInit {
   name: string;
   message: string;
 
+  socket: any;
   stompClient: any;
 
   constructor(private service: ProcessadorCepService) { }
 
   ngOnInit() {
+    this.session = Math.random().toString().substring(2) + new Date().getMilliseconds().toString();
+    this.initSocket();
+    this.connectSocket();
   }
 
-  connectSocket() {
+  private initSocket() {
+  }
+
+  private connectSocket() {
     const socket = new SockJS('/ws');
     this.stompClient = Stomp.over(socket);
-    console.log(this.name);
-    this.stompClient.connect({}, () => this.onConnected(), error => this.onError(error));
+    this.stompClient.reconnect_delay = 5000;
+    this.stompClient.connect({}, () => this.onConnected(), (error, e) => this.onError(error));
   }
 
   private onConnected() {
-    // Subscribe to the Public Topic
-    this.stompClient.subscribe('/topic/public', message => this.receiveMessage(message));
-    this.stompClient.subscribe('/topic/joao', message => this.receivePrivateMessage(message));
-
-    // Tell your username to the server
-    this.stompClient.send("/app/chat.addUser",
-      {},
-      JSON.stringify({ sender: this.name, type: 'JOIN' })
-    )
-  }
-
-  enviar() {
-    this.stompClient.send("/app/chat.sendMessage",
-      {},
-      JSON.stringify({ sender: this.name, type: 'CHAT', content: this.message })
-    )
+    this.error = '';
+    this.stompClient.subscribe(`/user/${this.session}/queue/reply`, message => this.onReceiveMessage(message));
   }
 
   private onError(error) {
-    console.log(error);
+    this.error = error;
+    if (!this.stompClient.connected) {
+      setInterval(() => this.connectSocket(), 5000);
+    }
   }
 
-
-  private receivePrivateMessage(message) {
-    console.log('Mensagem privada')
-    console.log(message);
-  }
-
-  private receiveMessage(message) {
-    console.log('Mensagem public');
-    console.log(message);
+  private onReceiveMessage(message) {
+    const historico = new Historico(JSON.parse(message.body));
+    this.onHistoricoChange(historico);
   }
 
   openFile() {
@@ -95,7 +87,7 @@ export class ProcessadorCepComponent implements OnInit {
 
     this.error = '';
     this.enviando = true;
-    this.service.upload(this.file)
+    this.service.upload(this.session, this.file)
       .map(result => new Historico(result))
       .subscribe(result => this.handleResultUpload(result), error => this.handleErrorUpload(error), () => this.enviando = false);
   }
@@ -113,7 +105,7 @@ export class ProcessadorCepComponent implements OnInit {
     this.error = '';
   }
 
-  onHistoricoChange(historico: Historico) {
+  private onHistoricoChange(historico: Historico) {
     const index = this.historicos.findIndex(his => his.token === historico.token);
     if (index >= 0) {
       this.historicos[index] = historico;

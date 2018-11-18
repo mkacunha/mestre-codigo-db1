@@ -19,12 +19,12 @@ export class RestService {
       .catch(error => Observable.throw(error));
   }
 
-  upload(resource: String, file: File): Observable<any> {
+  upload(resource: String, session: string, file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
     const headers = new Headers();
-  //  headers.append('token', '1234567890');
+    headers.append('session', session);
 
     return this.http
       .post(`${this.URL}${resource}`, formData, { headers: headers })
