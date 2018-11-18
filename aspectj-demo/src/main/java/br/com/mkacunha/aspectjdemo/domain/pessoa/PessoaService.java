@@ -90,7 +90,7 @@ public class PessoaService {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         };
     }

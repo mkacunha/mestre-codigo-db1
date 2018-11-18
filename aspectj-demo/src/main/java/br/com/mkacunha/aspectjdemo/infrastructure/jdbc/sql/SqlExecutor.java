@@ -39,8 +39,8 @@ public class SqlExecutor {
             if (monitoring.isShowSql()) {
                 LOGGER.info("SQL => {}", sql);
             }
-
-            PreparedStatement stmt = createAndExecutePreparedStatement(sql);
+            PreparedStatement stmt = createPreparedStatement(sql);
+            stmt.execute();
             Optional.ofNullable(consumer).ifPresent(con -> con.accept(stmt));
             stmt.close();
         } catch (SQLException e) {
@@ -49,10 +49,8 @@ public class SqlExecutor {
         }
     }
 
-    private PreparedStatement createAndExecutePreparedStatement(String sql) throws TransactionException, SQLException {
+    private PreparedStatement createPreparedStatement(String sql) throws TransactionException, SQLException {
         Connection currentConnection = transaction.getCurrentConnection();
-        PreparedStatement stmt = currentConnection.prepareStatement(sql, RETURN_GENERATED_KEYS);
-        stmt.execute();
-        return stmt;
+        return currentConnection.prepareStatement(sql, RETURN_GENERATED_KEYS);
     }
 }
