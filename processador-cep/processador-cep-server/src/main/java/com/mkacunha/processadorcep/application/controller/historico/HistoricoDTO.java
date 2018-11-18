@@ -14,7 +14,7 @@ public class HistoricoDTO {
 
 	private Date data;
 
-	private Integer quantidadeResgitrosNovos = 0;
+	private Integer quantidadeRegistrosNovos = 0;
 
 	private Integer quantidadeRegistrosAlterados = 0;
 
@@ -52,12 +52,12 @@ public class HistoricoDTO {
 		this.data = data;
 	}
 
-	public Integer getQuantidadeResgitrosNovos() {
-		return quantidadeResgitrosNovos;
+	public Integer getQuantidadeRegistrosNovos() {
+		return quantidadeRegistrosNovos;
 	}
 
-	public void setQuantidadeResgitrosNovos(Integer quantidadeResgitrosNovos) {
-		this.quantidadeResgitrosNovos = quantidadeResgitrosNovos;
+	public void setQuantidadeRegistrosNovos(Integer quantidadeRegistrosNovos) {
+		this.quantidadeRegistrosNovos = quantidadeRegistrosNovos;
 	}
 
 	public Integer getQuantidadeRegistrosAlterados() {
@@ -77,7 +77,7 @@ public class HistoricoDTO {
 	}
 
 	public Integer getQuantidadeRegistrosProcessados() {
-		return this.quantidadeResgitrosNovos + this.quantidadeRegistrosAlterados + this.quantidadeRegistrosComErros;
+		return this.quantidadeRegistrosNovos + this.quantidadeRegistrosAlterados + this.quantidadeRegistrosComErros;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.mkacunha.processadorcep.domain.historico;
 
+import com.mkacunha.processadorcep.application.controller.historico.HistoricoTranslator;
+import com.mkacunha.processadorcep.domain.cep.cepfile.CepFile;
 import com.mkacunha.processadorcep.domain.historico.log.HistoricoLog;
 import com.mkacunha.processadorcep.domain.historico.log.HistoricoLogRepository;
 import com.mkacunha.processadorcep.infrastructure.exception.ServiceException;
@@ -7,10 +9,10 @@ import com.mkacunha.processadorcep.infrastructure.exception.TransactionException
 import com.mkacunha.processadorcep.infrastructure.jdbc.Transaction;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.function.BinaryOperator;
 
 @Service
 public class HistoricoService {
@@ -33,12 +35,17 @@ public class HistoricoService {
 
     private final HistoricoLogRepository logRepository;
 
+    private final SimpMessageSendingOperations messagingTemplate;
+
+    private final HistoricoTranslator historicoTranslator;
     @Autowired
     public HistoricoService(Transaction transaction, HistoricoRepository repository,
-                            HistoricoLogRepository logRepository) {
+                            HistoricoLogRepository logRepository, SimpMessageSendingOperations messagingTemplate, HistoricoTranslator historicoTranslator) {
         this.transaction = transaction;
         this.repository = repository;
         this.logRepository = logRepository;
+        this.messagingTemplate = messagingTemplate;
+        this.historicoTranslator = historicoTranslator;
     }
 
     public Historico createAndSaveHistorico(String token, String arquivo) {
@@ -67,15 +74,16 @@ public class HistoricoService {
         }
     }
 
-    public void closeProcessing(List<HistoricoLog> logs, String token, Integer registrosNovos,
+    public void closeProcessing(List<HistoricoLog> logs, CepFile cepFile, Integer registrosNovos,
                                 Integer registrosAlterados, Integer registrosComErros) {
         try {
             transaction.begin();
-            Historico historico = findHistoricoByTokenWithoutTransaction(token);
+            Historico historico = findHistoricoByTokenWithoutTransaction(cepFile.getToken());
             historico.processado(registrosNovos, registrosAlterados, registrosComErros);
             repository.update(historico);
             saveLogs(historico, logs);
             transaction.commit();
+            messagingTemplate.convertAndSendToUser(cepFile.getSession(), "/queue/reply", this.historicoTranslator.apply(historico));
         } catch (TransactionException e) {
             transaction.rollback();
             LOGGER.error(e);

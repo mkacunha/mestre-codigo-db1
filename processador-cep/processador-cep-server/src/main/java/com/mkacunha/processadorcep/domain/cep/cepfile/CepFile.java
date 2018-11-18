@@ -6,16 +6,23 @@ import static java.util.UUID.randomUUID;
 
 public class CepFile {
 
+	private final String session;
+
 	private final String token;
 
 	private String name;
 
 	private List<String> ceps;
 
-	public CepFile(String name, List<String> ceps) {
+	public CepFile(String session, String name, List<String> ceps) {
+		this.session = session;
 		this.token = randomUUID().toString();
 		this.name = name;
 		this.ceps = ceps;
+	}
+
+	public String getSession() {
+		return session;
 	}
 
 	public String getToken() {

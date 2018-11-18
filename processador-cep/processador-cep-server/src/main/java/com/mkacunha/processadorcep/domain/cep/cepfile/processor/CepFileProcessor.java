@@ -1,6 +1,5 @@
 package com.mkacunha.processadorcep.domain.cep.cepfile.processor;
 
-import com.google.common.util.concurrent.Futures;
 import com.mkacunha.processadorcep.domain.cep.cepfile.CepFile;
 import com.mkacunha.processadorcep.domain.historico.HistoricoService;
 import com.mkacunha.processadorcep.domain.historico.log.HistoricoLog;
@@ -17,64 +16,64 @@ import static com.mkacunha.processadorcep.infrastructure.bean.ApplicationContext
 
 public class CepFileProcessor implements Runnable {
 
-	private final static Logger LOGGER = Logger.getLogger(CepFileProcessor.class);
+    private final static Logger LOGGER = Logger.getLogger(CepFileProcessor.class);
 
-	private final HistoricoService historicoService;
+    private final HistoricoService historicoService;
 
-	private final CepFile cepFile;
+    private final CepFile cepFile;
 
-	private final ExecutorService executorService;
+    private final ExecutorService executorService;
 
-	private List<Future<HistoricoLog>> futures;
+    private List<Future<HistoricoLog>> futures;
 
-	private List<HistoricoLog> logs;
+    private List<HistoricoLog> logs;
 
-	private AtomicInteger registrosNovos;
+    private AtomicInteger registrosNovos;
 
-	private AtomicInteger registrosAlterados;
+    private AtomicInteger registrosAlterados;
 
-	private AtomicInteger resgistrosComErros;
+    private AtomicInteger resgistrosComErros;
 
-	private CepFileProcessor(ExecutorService executorService, CepFile cepFile) {
-		initContadores();
-		this.executorService = executorService;
-		this.cepFile = cepFile;
-		this.historicoService = getBean(HistoricoService.class);
-		this.futures = newArrayList();
-		this.logs = newArrayList();
-	}
+    private CepFileProcessor(ExecutorService executorService, CepFile cepFile) {
+        initContadores();
+        this.executorService = executorService;
+        this.cepFile = cepFile;
+        this.historicoService = getBean(HistoricoService.class);
+        this.futures = newArrayList();
+        this.logs = newArrayList();
+    }
 
-	public static Runnable of(ExecutorService executorService, CepFile cepFile) {
-		return new CepFileProcessor(executorService, cepFile);
-	}
+    public static Runnable of(ExecutorService executorService, CepFile cepFile) {
+        return new CepFileProcessor(executorService, cepFile);
+    }
 
-	private void initContadores() {
-		this.registrosNovos = new AtomicInteger();
-		this.registrosAlterados = new AtomicInteger();
-		this.resgistrosComErros = new AtomicInteger();
-	}
+    private void initContadores() {
+        this.registrosNovos = new AtomicInteger();
+        this.registrosAlterados = new AtomicInteger();
+        this.resgistrosComErros = new AtomicInteger();
+    }
 
-	@Override
-	public void run() {
-		LOGGER.info(String.format("==> Iniciou o processamento do arquivo %s", cepFile.getName()));
-		cepFile.getCeps().forEach(cep -> processCep(cep));
-		futures.forEach(this::getResultFuture);
-		historicoService.closeProcessing(logs, cepFile.getToken(), registrosNovos.get(), registrosAlterados.get(),
-				resgistrosComErros.get());
-	}
+    @Override
+    public void run() {
+        LOGGER.info(String.format("==> Iniciou o processamento do arquivo %s", cepFile.getName()));
+        cepFile.getCeps().forEach(cep -> processCep(cep));
+        futures.forEach(this::getResultFuture);
+        historicoService.closeProcessing(logs, cepFile, registrosNovos.get(), registrosAlterados.get(),
+                resgistrosComErros.get());
+    }
 
-	private void processCep(String cep) {
-		final Callable<HistoricoLog> taskCepSave = CepProcessor
-				.of(cep, registrosNovos, registrosAlterados, resgistrosComErros);
-		futures.add(executorService.submit(taskCepSave));
-	}
+    private void processCep(String cep) {
+        final Callable<HistoricoLog> taskCepSave = CepProcessor
+                .of(cep, registrosNovos, registrosAlterados, resgistrosComErros);
+        futures.add(executorService.submit(taskCepSave));
+    }
 
-	private void getResultFuture(Future<HistoricoLog> future) {
-		try {
-			logs.add(future.get());
-		} catch (Exception e) {
-			LOGGER.error(e);
-		}
-	}
+    private void getResultFuture(Future<HistoricoLog> future) {
+        try {
+            logs.add(future.get());
+        } catch (Exception e) {
+            LOGGER.error(e);
+        }
+    }
 
 }

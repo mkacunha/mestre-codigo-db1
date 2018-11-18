@@ -15,7 +15,7 @@ public class HistoricoTranslator implements Function<Historico, HistoricoDTO> {
 		dto.setArquivo(historico.getArquivo());
 		dto.setStatus(historico.getStatus());
 		dto.setData(historico.getData());
-		dto.setQuantidadeResgitrosNovos(historico.getQuantidadeRegistrosNovos());
+		dto.setQuantidadeRegistrosNovos(historico.getQuantidadeRegistrosNovos());
 		dto.setQuantidadeRegistrosAlterados(historico.getQuantidadeRegistrosAlterados());
 		dto.setQuantidadeRegistrosComErros(historico.getQuantidadeRegistrosComErros());
 		return dto;
