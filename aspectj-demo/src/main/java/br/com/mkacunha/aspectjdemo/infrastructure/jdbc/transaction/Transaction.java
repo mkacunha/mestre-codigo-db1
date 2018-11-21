@@ -55,10 +55,6 @@ public class Transaction {
 		}
 	}
 
-	public void finnaly() {
-		leaveCurrentConnection();
-	}
-
 	public void rollback() {
 		try {
 			getCurrentConnection().rollback();

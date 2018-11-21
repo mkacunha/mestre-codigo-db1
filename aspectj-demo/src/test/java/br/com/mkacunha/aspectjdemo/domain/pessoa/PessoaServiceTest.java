@@ -55,5 +55,12 @@ public class PessoaServiceTest {
         }
     }
 
+    @Test
+    public void deve_salvar_uma_lista_de_pessoas() {
+        Pessoa pessoa = new Pessoa(1, "João Silva", "1990-01-01", 30);
+        pessoaService.save(Arrays.asList(pessoa));
+        Pessoa pessoaEncontrada = pessoaService.findAll().get(0);
+        assertEquals(pessoa, pessoaEncontrada);
+    }
 
 }

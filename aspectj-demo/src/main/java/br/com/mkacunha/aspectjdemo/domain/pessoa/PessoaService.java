@@ -1,8 +1,8 @@
 package br.com.mkacunha.aspectjdemo.domain.pessoa;
 
+import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.exceptions.TransactionException;
 import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.sql.SqlExecutor;
 import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.transaction.Transactional;
-import br.com.mkacunha.aspectjdemo.infrastructure.jdbc.exceptions.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,9 @@ public class PessoaService {
     private SqlExecutor sqlExecutor;
 
     @Transactional
-    public void save(Pessoa pessoa) {
+    public Pessoa save(Pessoa pessoa) {
         buildAndExecuteSql(pessoa);
+        return pessoa;
     }
 
     @Transactional
@@ -46,11 +47,9 @@ public class PessoaService {
             sqlExecutor.execute(sql);
         } catch (TransactionException e) {
             logger.error(e.getMessage(), e);
-            throw new RuntimeException("Não foi possível salvar pessoa");
+            throw new PessoaSerciceExceprion("Não foi possível salvar pessoa");
         }
     }
-
-
 
 
     @Transactional
@@ -62,7 +61,7 @@ public class PessoaService {
             return pessoas;
         } catch (TransactionException e) {
             logger.error(e.getMessage(), e);
-            throw new RuntimeException("Não foi possível recuperar todas as pessoas");
+            throw new PessoaSerciceExceprion("Não foi possível recuperar todas as pessoas");
         }
     }
 
@@ -73,7 +72,7 @@ public class PessoaService {
             sqlExecutor.execute(SQL_DELETE_ALL);
         } catch (TransactionException e) {
             logger.error(e.getMessage(), e);
-            throw new RuntimeException("Não foi deletar todas as pessoas");
+            throw new PessoaSerciceExceprion("Não foi deletar todas as pessoas");
         }
     }
 
