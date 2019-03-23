@@ -30,4 +30,4 @@
 
 ~14) Criar uma aplicação em tempo real, com interação multi-usuário que consuma e disponibilize informações através de socket com tratamento de erros;~
 
-15) Criar uma aplicação com no minimo 80% de cobertura de teste unitário, demonstrando o uso de stubs e mocks;
+~15) Criar uma aplicação com no minimo 80% de cobertura de teste unitário, demonstrando o uso de stubs e mocks;~
